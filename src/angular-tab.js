@@ -29,7 +29,8 @@ angular.module('quark.tab.module', [])
             scope: {
                 tabSkipReload: "=",
                 tabInitActive : "=",
-                tabLocationType: '@'
+                tabLocationType: '@',
+                tabSearchName : "="
             },
             controller: ['$scope','quarkTabConfig','$timeout','$filter', function ($scope,quarkTabConfig,$timeout,$filter) {
 
@@ -41,7 +42,12 @@ angular.module('quark.tab.module', [])
 
                 this.tabLocationType = getLocationType();
 
+                this.tabSearchName = $scope.tabSearchName;
+
                 function getLocationType() {
+                    if(angular.isString($scope.tabSearchName)){
+                        return 'search'
+                    }
                     var type = ($scope.tabLocationType||'').toLowerCase();
                     return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
                 }
@@ -93,6 +99,13 @@ angular.module('quark.tab.module', [])
 
                 var locationMethod = tabSetController.tabLocationType,
                     locationFunc = function (value) {
+                        if(locationMethod == 'search'){
+                            if(value){
+                                return location[locationMethod](tabSetController.tabSearchName,value);
+                            }else{
+                                return location[locationMethod]()[tabSetController.tabSearchName];
+                            }
+                        }
                         return location[locationMethod](value)
                     },
                     curPath = locationFunc(),
