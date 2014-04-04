@@ -1,15 +1,19 @@
 # angular-tab
 
+Demo : [Live Demo][demo]
+
+
+[demo]: http://ariesjia.github.io/angular-tab/demo/
 
 ## Getting Started
 
 Download the [production version][min] or the [development version][max].
-[Live Demo][demo]
+
 
 [min]: https://raw.github.com/ariesjia/angular-tab/master/dist/angular-tab.tpl.min.js
 [max]: https://raw.github.com/ariesjia/angular-tab/master/dist/angular-tab.tpl.js
 
-[demo]: http://ariesjia.github.io/angular-tab/demo/
+
 In your web page:
 
 ```html
