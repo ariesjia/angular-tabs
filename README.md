@@ -4,15 +4,17 @@
 ## Getting Started
 
 Download the [production version][min] or the [development version][max].
+[Live Demo][demo]
 
-[min]: https://raw.github.com/ariesjia/angular-tab/master/dist/angular-angular-tab.min.js
-[max]: https://raw.github.com/ariesjia/angular-tab/master/dist/angular-angular-tab.js
+[min]: https://raw.github.com/ariesjia/angular-tab/master/dist/angular-tab.tpl.min.js
+[max]: https://raw.github.com/ariesjia/angular-tab/master/dist/angular-tab.tpl.js
 
+[demo]: http://ariesjia.github.io/angular-tab/demo/
 In your web page:
 
 ```html
 <script src="angular.js"></script>
-<script src="dist/angular-tab.min.js"></script>
+<script src="dist/angular-tab.tpl.min.js"></script>
 ```
 
 ## Documentation
