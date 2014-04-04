@@ -5,15 +5,22 @@ angular.module('quarkTabApp', ['ngRoute', 'quark.tab'])
         $routeProvider
             .when('/home', {
                 templateUrl: 'views/home.html',
-                controller: "MainCtrl"
+                controller: "MainCtrl",
+                reloadOnSearch : false
             })
             .when('/urltab/:tab', {
                 templateUrl: 'views/url-tab.html',
-                controller: "UrlTabCtrl"
+                controller: "UrlTabCtrl",
+                reloadOnSearch : false
             })
             .when('/hashtab', {
                 templateUrl: 'views/hash-tab.html',
                 controller: "HashTabCtrl",
+                reloadOnSearch : false
+            })
+            .when('/searchtab', {
+                templateUrl: 'views/search-tab.html',
+                controller: "SearchTabCtrl",
                 reloadOnSearch : false
             })
             .otherwise({

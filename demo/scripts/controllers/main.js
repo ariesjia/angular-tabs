@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('quarkTabApp')
-    .controller('MainCtrl', ["$scope", function ($scope) {
+    .controller('MainCtrl', ["$scope","clearLocation", function ($scope,clearLocation) {
 
+        clearLocation.hash();
 
-        $scope.text= 'hello';
-
+        clearLocation.search();
 
     }]);
