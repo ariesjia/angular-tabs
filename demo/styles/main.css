@@ -1,0 +1,92 @@
+/*= reset =*/
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0;}
+header,footer,section,article,aside,nav,hgroup,address,figure,figcaption,menu,details{display:block;}
+table{border-collapse:collapse;border-spacing:0;}
+caption,th{text-align:left;font-weight:normal;}
+html,body,fieldset,img,iframe,abbr{border:0;}
+i,cite,em,var,address,dfn{font-style:normal;}
+[hidefocus],summary{outline:0;}
+li{list-style:none;}
+h1,h2,h3,h4,h5,h6,small{font-size:100%;}
+sup,sub{font-size:83%;}
+pre,code,kbd,samp{font-family:inherit;}
+q:before,q:after{content:none;}
+textarea{overflow:auto;resize:none;}
+label,summary{cursor:default;}
+a,button{cursor:pointer;}
+h1,h2,h3,h4,h5,h6,em,strong,b{font-weight:bold;}
+del,ins,u,s,a,a:hover{text-decoration:none;}
+body,textarea,input,button,select,keygen,legend{font:16px/1.2 arial,\5b8b\4f53;color:#666;outline:0;}
+body{background:#fff;}
+a,a:hover{color:#666;}
+p{margin-bottom: 10px;}
+
+
+/*= angular-tab-style =*/
+.md-quark-tab{margin:20px 0 10px;}
+.md-quark-tab .tab-hd {zoom: 1;height: 41px;border-bottom: 1px solid #cccccc;}
+.md-quark-tab .tab-hd:after{content:"";clear: both;display: block;height: 0;overflow: hidden;visibility: hidden;}
+.md-quark-tab .tab-hd li{float: left;_display: inline;zoom: 1;height: 40px;cursor: pointer;position: relative;border: 1px solid transparent;border-bottom: 1px solid #ccc;}
+.md-quark-tab .tab-hd li a{padding: 0 30px;display: block;height: 40px;outline: none;line-height:40px;}
+.md-quark-tab .tab-hd .active{border: 1px solid #ccc;border-bottom: 1px solid #fff;background-color: #fff;}
+.md-quark-tab  .tab-bd {background-color: #fff;padding: 20px;border: 1px solid #ccc;border-top: 0 none;}
+
+
+
+
+
+.g-head{
+    margin-bottom:15px;
+}
+.g-head .g-cont{
+    padding: 15px 0;
+    text-align: center;
+}
+.g-head .logo{
+    font-size:16px;
+    line-height:20px;
+    font-weight:400;
+    letter-spacing:3px;
+    color:#000;
+}
+
+.g-nav{
+    height: 40px;
+    background-color: #766264;
+    margin: 0;
+}
+.g-nav .tab-hd{
+    width:1000px;
+    margin:0 auto;
+    height: 40px;
+    border-bottom:0 none;
+}
+.g-nav .tab-hd li{
+    float: left;
+    margin-right: 5px;
+    border:0 none;
+}
+.g-nav .tab-hd .active{
+    border:0 none;
+    background: none;
+}
+.g-nav .tab-hd li a {
+    display: block;
+    padding: 0 15px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.g-nav .active a,
+.g-nav li a:hover{
+    background-color: #99887f;
+    text-decoration: none;
+}
+
+
+.g-cont{
+    width:1000px;
+    margin:0 auto;
+}

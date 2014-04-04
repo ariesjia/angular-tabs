@@ -1,0 +1,24 @@
+<div>
+
+    <div>
+        <p>This is template.....</p>
+        <p>If you click sub tab and change the hash ,but it does not reload the controller and template</p>
+        <p>reload controller count : <strong>{{ count }}</strong></p>
+    </div>
+
+
+    <div quark-tab-set tab-skip-reload="true">
+        <div quark-tab
+             tab-match="^/urltab/tab1" tab-href="/urltab/tab1" template-url="views/url-tab/tab1.html">
+            TAB1
+        </div>
+        <div quark-tab tab-match="/urltab/tab2" tab-href="/urltab/tab2" template-url="views/url-tab/tab2.html">
+            TAB2</div>
+        <div quark-tab tab-match="/urltab/tab3" tab-href="/urltab/tab3" template-url="views/url-tab/tab3.html">
+            TAB3</div>
+        <div quark-tab tab-match="/urltab/tab4" tab-href="/urltab/tab4" template-url="views/url-tab/tab4.html">
+            TAB4</div>
+    </div>
+
+
+</div>

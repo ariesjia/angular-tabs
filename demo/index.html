@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>angular quark tab</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body ng-app="quarkTabApp">
+
+        <div class="g-head">
+            <div class="g-cont">
+                <h1 class="logo">Quark Tab</h1>
+            </div>
+            <div class="g-nav" quark-tab-set>
+                <div quark-tab tab-match="^/home" tab-href="/home">HOME</div>
+                <div quark-tab tab-match="^/urltab" tab-href="/urltab/tab1">URL-TAB</div>
+                <div quark-tab tab-match="^/hashtab" tab-href="/hashtab">HASH-TAB</div>
+            </div>
+        </div>
+
+        <div class="g-cont" ng-view="">
+
+
+        </div>
+
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+
+    <script src="dist/angular-tab.tpl.min.js"></script>
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/service/count.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/url-tab.js"></script>
+
+</body>
+</html>
