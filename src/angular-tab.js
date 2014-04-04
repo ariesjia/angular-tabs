@@ -2,7 +2,7 @@
 
 angular.module('quark.tab.module', [])
     .constant("quarkTabConfig", {
-
+        locationType : ["path","hash","search"]
     })
     .factory('location', [
         '$location',
@@ -28,16 +28,23 @@ angular.module('quark.tab.module', [])
             templateUrl: 'src/tab-set.html',
             scope: {
                 tabSkipReload: "=",
+                tabInitActive : "=",
                 tabLocationType: '@'
             },
-            controller: ['$scope', function ($scope) {
+            controller: ['$scope','quarkTabConfig','$timeout','$filter', function ($scope,quarkTabConfig,$timeout,$filter) {
 
                 $scope.templateUrl = '';
 
                 var tabs = $scope.tabs = [];
 
                 this.tabSkipReload = $scope.tabSkipReload;
-                this.tabLocationType = $scope.tabLocationType;
+
+                this.tabLocationType = getLocationType();
+
+                function getLocationType() {
+                    var type = ($scope.tabLocationType||'').toLowerCase();
+                    return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
+                }
 
                 this.selectTab = function (tab) {
                     if (tab.selected) {
@@ -57,6 +64,16 @@ angular.module('quark.tab.module', [])
                 this.addTab = function (tab) {
                     tabs.push(tab);
                 };
+
+                $timeout(function(){
+                    var seletedTab = $filter('filter')(tabs, {'selected': true});
+
+                    if(!seletedTab.length && angular.isNumber($scope.tabInitActive) && $scope.tabInitActive < tabs.length){
+                        tabs[$scope.tabInitActive].select();
+                    }
+
+                });
+
             }]
         };
     })
@@ -74,7 +91,7 @@ angular.module('quark.tab.module', [])
             templateUrl: 'src/tab.html',
             link: function (scope, element, attrs, tabSetController) {
 
-                var locationMethod = tabSetController.tabLocationType || 'path',
+                var locationMethod = tabSetController.tabLocationType,
                     locationFunc = function (value) {
                         return location[locationMethod](value)
                     },

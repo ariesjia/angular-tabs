@@ -13,7 +13,7 @@ angular.module('quarkTabApp', ['ngRoute', 'quark.tab'])
             })
             .when('/hashtab', {
                 templateUrl: 'views/hash-tab.html',
-                controller: "UrlTabCtrl",
+                controller: "HashTabCtrl",
                 reloadOnSearch : false
             })
             .otherwise({

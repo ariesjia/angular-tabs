@@ -3,6 +3,6 @@
 angular.module('quarkTabApp')
     .controller('UrlTabCtrl', ["$scope","count", function ($scope,count) {
 
-        $scope.count = count.add().get();
+        $scope.count = count.setId("url").add().get();
 
     }]);
