@@ -1,0 +1,19 @@
+<div>
+    <p>Use $location hash to remember tab</p>
+    <p>you should add reloadOnSearch in route , to make sure not reload controller</p>
+    <p>reload controller count : <strong>{{ count }}</strong></p>
+    <p>This hash tab  -  tab-init-active="1" </p>
+
+    <div quark-tab-set tab-location-type="hash" tab-init-active="1">
+        <div quark-tab
+             tab-match="tab1" tab-href="tab1" template-url="views/url-tab/tab1.html">
+            TAB1
+        </div>
+        <div quark-tab tab-match="tab2" tab-href="tab2" template-url="views/url-tab/tab2.html">
+            TAB2</div>
+        <div quark-tab tab-match="tab3" tab-href="tab3" template-url="views/url-tab/tab3.html">
+            TAB3</div>
+        <div quark-tab tab-match="tab4" tab-href="tab4" template-url="views/url-tab/tab4.html">
+            TAB4</div>
+    </div>
+</div>
