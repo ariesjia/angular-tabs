@@ -112,7 +112,7 @@ angular.module('quark.tab.module', [])
                         return location[locationMethod](value)
                     },
                     curPath = locationFunc(),
-                    regExp = new RegExp(scope.tabMatch);
+                    regExp = new RegExp(scope.tabMatch || scope.tabHref);
 
                 tabSetController.addTab(scope);
 

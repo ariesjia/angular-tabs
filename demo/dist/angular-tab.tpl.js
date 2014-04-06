@@ -1,6 +1,6 @@
 /**
  * angular-tab
- * @version v0.0.8 - 2014-04-06
+ * @version v0.0.9 - 2014-04-06
  * @link https://github.com/ariesjia/angular-tab
  * @author Chenjia <ariesjia00@hotmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -138,7 +138,7 @@ angular.module('quark.tab.module', [])
                         return location[locationMethod](value)
                     },
                     curPath = locationFunc(),
-                    regExp = new RegExp(scope.tabMatch);
+                    regExp = new RegExp(scope.tabMatch || scope.tabHref);
 
                 tabSetController.addTab(scope);
 
