@@ -75,10 +75,11 @@ angular.module('quark.tab.module', [])
                 };
 
                 $timeout(function(){
-                    var seletedTab = $filter('filter')(tabs, {'selected': true});
+                    var seletedTab = $filter('filter')(tabs, {'selected': true}),
+                        tabInitActive = $scope.tabInitActive || 0;
 
-                    if(!seletedTab.length && angular.isNumber($scope.tabInitActive) && $scope.tabInitActive < tabs.length){
-                        tabs[$scope.tabInitActive].select();
+                    if(!seletedTab.length && angular.isNumber(tabInitActive) && tabInitActive < tabs.length){
+                        tabs[tabInitActive].select();
                     }
 
                 });
@@ -120,14 +121,13 @@ angular.module('quark.tab.module', [])
                     var hrefPath = path || scope.tabHref;
                     tabSetController.selectTab(scope);
 
-                    if(locationFunc() != hrefPath){
-
+                    if(locationFunc() != hrefPath && !!scope.tabHref){
                         if (!path && tabSetController.tabSkipReload) {
                             location.skipReload();
                         }
-
                         locationFunc(hrefPath).replace();
                     }
+
                 };
 
                 if (regExp.test(curPath)) {

@@ -1,6 +1,6 @@
 /**
  * angular-tab
- * @version v0.0.9 - 2014-04-06
+ * @version v0.0.10 - 2014-04-06
  * @link https://github.com/ariesjia/angular-tab
  * @author Chenjia <ariesjia00@hotmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -80,9 +80,9 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
           tabs.push(tab);
         };
         $timeout(function () {
-          var seletedTab = $filter('filter')(tabs, { 'selected': true });
-          if (!seletedTab.length && angular.isNumber($scope.tabInitActive) && $scope.tabInitActive < tabs.length) {
-            tabs[$scope.tabInitActive].select();
+          var seletedTab = $filter('filter')(tabs, { 'selected': true }), tabInitActive = $scope.tabInitActive || 0;
+          if (!seletedTab.length && angular.isNumber(tabInitActive) && tabInitActive < tabs.length) {
+            tabs[tabInitActive].select();
           }
         });
       }
@@ -117,7 +117,7 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
         scope.select = function (path) {
           var hrefPath = path || scope.tabHref;
           tabSetController.selectTab(scope);
-          if (locationFunc() != hrefPath) {
+          if (locationFunc() != hrefPath && !!scope.tabHref) {
             if (!path && tabSetController.tabSkipReload) {
               location.skipReload();
             }

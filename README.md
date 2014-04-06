@@ -21,24 +21,17 @@ Download the [production version][min] or the [development version][max].
 <script src="dist/angular-tab.tpl.min.js"></script>
 
 <div quark-tab-set tab-skip-reload="true">
-	<div quark-tab tab-href="/urltab/tab1" template-url="views/url-tab/tab1.html">
-	TAB1
-    </div>
-    <div quark-tab tab-href="/urltab/tab2" template-url="views/url-tab/tab2.html">
-    TAB2
-	</div>
-    <div quark-tab tab-href="/urltab/tab3" template-url="views/url-tab/tab3.html">
-	TAB3
-	</div>
-	<div quark-tab tab-href="/urltab/tab4" template-url="views/url-tab/tab4.html">
-	TAB4
-	</div>
+	<div quark-tab tab-href="/urltab/tab1" template-url="views/url-tab/tab1.html">TAB1</div>
+    <div quark-tab tab-href="/urltab/tab2" template-url="views/url-tab/tab2.html">TAB2</div>
+    <div quark-tab tab-href="/urltab/tab3" template-url="views/url-tab/tab3.html">TAB3</div>
+	<div quark-tab tab-href="/urltab/tab4" template-url="views/url-tab/tab4.html">TAB4</div>
 </div>
 
 ```
 
 ## Documentation
-_(Coming soon)_
+### Git
+### Git
 
 ## Examples
 _(Coming soon)_
