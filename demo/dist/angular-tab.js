@@ -1,6 +1,6 @@
 /**
  * angular-tab
- * @version v0.0.1 - 2014-04-04
+ * @version v0.0.8 - 2014-04-06
  * @link https://github.com/ariesjia/angular-tab
  * @author Chenjia <ariesjia00@hotmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -9,6 +9,7 @@ angular.module('quark.tab', ['quark.tab.module']);
 'use strict';
 angular.module('quark.tab.module', []).constant('quarkTabConfig', {
   locationType: [
+    'url',
     'path',
     'hash',
     'search'
@@ -37,8 +38,7 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
     scope: {
       tabSkipReload: '=',
       tabInitActive: '=',
-      tabLocationType: '@',
-      tabSearchName: '='
+      tabLocationType: '@'
     },
     controller: [
       '$scope',
@@ -47,18 +47,23 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
       '$filter',
       function ($scope, quarkTabConfig, $timeout, $filter) {
         $scope.templateUrl = '';
+        var self = this;
         var tabs = $scope.tabs = [];
-        this.tabSkipReload = $scope.tabSkipReload;
-        this.tabLocationType = getLocationType();
-        this.tabSearchName = $scope.tabSearchName;
+        self.tabSkipReload = $scope.tabSkipReload;
+        self.tabLocationType = getLocationType();
         function getLocationType() {
-          if (angular.isString($scope.tabSearchName)) {
-            return 'search';
+          var tabLocationType = ($scope.tabLocationType || '').split(':');
+          var type = tabLocationType[0].toLowerCase();
+          if (type === quarkTabConfig.locationType[3]) {
+            try {
+              self.tabSearchName = tabLocationType[1];
+            } catch (e) {
+              console.error('[error]:use \'search\' should set search name , eg : tab-location-type="search:tab" ');
+            }
           }
-          var type = ($scope.tabLocationType || '').toLowerCase();
           return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
         }
-        this.selectTab = function (tab) {
+        self.selectTab = function (tab) {
           if (tab.selected) {
             return true;
           }
@@ -68,10 +73,10 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
           tab.selected = true;
           this.setTabUrl(tab.templateUrl);
         };
-        this.setTabUrl = function (templateUrl) {
+        self.setTabUrl = function (templateUrl) {
           $scope.templateUrl = templateUrl;
         };
-        this.addTab = function (tab) {
+        self.addTab = function (tab) {
           tabs.push(tab);
         };
         $timeout(function () {
