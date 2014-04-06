@@ -1,7 +1,6 @@
 # angular-tab
 
-Demo : [Live Demo][demo]
-
+Here is the [Demo][demo]
 
 [demo]: http://ariesjia.github.io/angular-tab/demo/
 
@@ -14,11 +13,28 @@ Download the [production version][min] or the [development version][max].
 [max]: https://raw.github.com/ariesjia/angular-tab/master/dist/angular-tab.tpl.js
 
 
-In your web page:
+## Usage
 
 ```html
 <script src="angular.js"></script>
+<script src="angular-route.js"></script>
 <script src="dist/angular-tab.tpl.min.js"></script>
+
+<div quark-tab-set tab-skip-reload="true">
+	<div quark-tab tab-href="/urltab/tab1" template-url="views/url-tab/tab1.html">
+	TAB1
+    </div>
+    <div quark-tab tab-href="/urltab/tab2" template-url="views/url-tab/tab2.html">
+    TAB2
+	</div>
+    <div quark-tab tab-href="/urltab/tab3" template-url="views/url-tab/tab3.html">
+	TAB3
+	</div>
+	<div quark-tab tab-href="/urltab/tab4" template-url="views/url-tab/tab4.html">
+	TAB4
+	</div>
+</div>
+
 ```
 
 ## Documentation
