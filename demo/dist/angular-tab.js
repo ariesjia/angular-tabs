@@ -1,6 +1,6 @@
 /**
  * angular-tab
- * @version v0.0.9 - 2014-04-06
+ * @version v0.0.11 - 2014-04-08
  * @link https://github.com/ariesjia/angular-tab
  * @author Chenjia <ariesjia00@hotmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -13,7 +13,8 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
     'path',
     'hash',
     'search'
-  ]
+  ],
+  defaultSearchName: 'tab'
 }).factory('location', [
   '$location',
   '$route',
@@ -55,11 +56,7 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
           var tabLocationType = ($scope.tabLocationType || '').split(':');
           var type = tabLocationType[0].toLowerCase();
           if (type === quarkTabConfig.locationType[3]) {
-            try {
-              self.tabSearchName = tabLocationType[1];
-            } catch (e) {
-              console.error('[error]:use \'search\' should set search name , eg : tab-location-type="search:tab" ');
-            }
+            self.tabSearchName = tabLocationType.length > 1 ? tabLocationType[1] : quarkTabConfig.defaultSearchName;
           }
           return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
         }
@@ -80,9 +77,9 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
           tabs.push(tab);
         };
         $timeout(function () {
-          var seletedTab = $filter('filter')(tabs, { 'selected': true });
-          if (!seletedTab.length && angular.isNumber($scope.tabInitActive) && $scope.tabInitActive < tabs.length) {
-            tabs[$scope.tabInitActive].select();
+          var seletedTab = $filter('filter')(tabs, { 'selected': true }), tabInitActive = $scope.tabInitActive || 0;
+          if (!seletedTab.length && angular.isNumber(tabInitActive) && tabInitActive < tabs.length) {
+            tabs[tabInitActive].select();
           }
         });
       }
@@ -117,7 +114,7 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
         scope.select = function (path) {
           var hrefPath = path || scope.tabHref;
           tabSetController.selectTab(scope);
-          if (locationFunc() != hrefPath) {
+          if (locationFunc() != hrefPath && !!scope.tabHref) {
             if (!path && tabSetController.tabSkipReload) {
               location.skipReload();
             }

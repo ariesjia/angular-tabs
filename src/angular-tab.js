@@ -2,7 +2,8 @@
 
 angular.module('quark.tab.module', [])
     .constant("quarkTabConfig", {
-        locationType : ["url","path","hash","search"]
+        locationType : ["url","path","hash","search"],
+        defaultSearchName : 'tab'
     })
     .factory('location', [
         '$location',
@@ -46,11 +47,7 @@ angular.module('quark.tab.module', [])
                     var tabLocationType = ($scope.tabLocationType || '').split(':');
                     var type = (tabLocationType[0]).toLowerCase();
                     if(type === quarkTabConfig.locationType[3]){
-                        try{
-                            self.tabSearchName = tabLocationType[1];
-                        }catch(e){
-                            console.error("[error]:use 'search' should set search name , eg : tab-location-type=\"search:tab\" ");
-                        }
+                        self.tabSearchName = tabLocationType.length>1 ? tabLocationType[1] : quarkTabConfig.defaultSearchName;
                     }
                     return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
                 }
@@ -75,6 +72,7 @@ angular.module('quark.tab.module', [])
                 };
 
                 $timeout(function(){
+
                     var seletedTab = $filter('filter')(tabs, {'selected': true}),
                         tabInitActive = $scope.tabInitActive || 0;
 
