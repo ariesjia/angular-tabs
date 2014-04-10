@@ -18,27 +18,21 @@ Download the [production version][min] or the [development version][max].
 1. Add the js to your HTML code.
 
 ```html
-
 <script src="dist/angular-tab.tpl.min.js"></script>
-
 ```
 2. Add dependency to your app modules
 ```script
-
 var myApp = angular.module('myApp', ['quark.tab']);
-
 ```
 
 3. Put directive `quark-tab-set` & `quark-tab`  into your HTML code
 ```html
-
 <div quark-tab-set tab-skip-reload="true">
 	<div quark-tab tab-href="/urltab/tab1" template-url="views/url-tab/tab1.html">TAB1</div>
     <div quark-tab tab-href="/urltab/tab2" template-url="views/url-tab/tab2.html">TAB2</div>
     <div quark-tab tab-href="/urltab/tab3" template-url="views/url-tab/tab3.html">TAB3</div>
 	<div quark-tab tab-href="/urltab/tab4" template-url="views/url-tab/tab4.html">TAB4</div>
 </div>
-
 ```
 
 ## Attributes
@@ -46,28 +40,42 @@ var myApp = angular.module('myApp', ['quark.tab']);
 ### quark-tab-set
 
 - **tab-skip-reload** (default `false`)
+
   The route change will not reload controller completely.
 
 - **tab-init-active** (default `0`)
+
   The index tab will set to active when initialize.
 
 - **tab-location-type** (default `path`)
-  Defines tab location type, There are 4 types `path`,`url`,`hash`,`search` , If choose `search` , you should set a search name , the default search name is `tab`
+  
+  Defines tab location type, There are 4 types `path`,`url`,`hash`,`search` .
+  
+  If choose `search` , you should set a search name like tab-location-type="search:`tab`"  the default search name is `tab`
+  
   Examples
+  
   path :    url/#article/2/tab1
+  
   url :     url/#article/2/tab1
+  
   hash :    url/#article/2#tab1
+  
   search :  url/#article/2?tab=tab1
+  
 
 ### quark-tab
 
 - **template-url** (default `null`)
-  This url will be include in tab-body when this tab active.
+
+	This url will be include in tab-body when this tab active.
 
 - **tab-href** (default `null`)
+  
   Define this tab location flag . if choose location-type is `path` or `url` , you should write complete url .
 
-- **tab-match** (default `tab-href`)
+- **tab-match** (default same to `tab-href`)
+  
   Defines if the url location match this attribute value , tab will be active
 
 ## Examples
