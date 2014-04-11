@@ -107,23 +107,11 @@ module.exports = function (grunt) {
             }
         },
         jshint: {
-            gruntfile: {
-                options: {
-                    jshintrc: '.jshintrc'
-                },
-                src: 'Gruntfile.js'
-            },
             src: {
                 options: {
                     jshintrc: '.jshintrc'
                 },
                 src: ['<%= yo.src %>/{,*/}*.js']
-            },
-            test: {
-                options: {
-                    jshintrc: 'test/.jshintrc'
-                },
-                src: ['test/**/*.js']
             }
         },
         karma: {
@@ -192,8 +180,12 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
-        'jshint',
+//        'jshint',
         'karma:unit'
+    ]);
+
+    grunt.registerTask('dev', [
+        'build'
     ]);
 
     grunt.registerTask('build', [

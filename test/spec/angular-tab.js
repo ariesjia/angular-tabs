@@ -1,43 +1,149 @@
 'use strict';
 
-describe('Module: angularTab', function () {
-  var scope, $sandbox, $compile, $timeout;
+describe('quark.tab unit test', function () {
 
-  // load the controller's module
-  beforeEach(module('ariesjia.angularTab'));
+    beforeEach(module('ngRoute'));
+    beforeEach(module('quark.tab'));
 
-  beforeEach(inject(function ($injector, $rootScope, _$compile_, _$timeout_) {
-    scope = $rootScope;
-    $compile = _$compile_;
-    $timeout = _$timeout_;
+    var $scope, $compile, elm, $location , $timeout;
 
-    $sandbox = $('<div id="sandbox"></div>').appendTo($('body'));
-  }));
+    beforeEach(inject(function ($rootScope, _$compile_,_$location_,_$timeout_) {
+        $scope = $rootScope.$new();
+        $compile = _$compile_;
+        $location = _$location_;
+        $timeout = _$timeout_;
+    }));
 
-  afterEach(function() {
-    $sandbox.remove();
-    scope.$destroy();
-  });
+    describe('sfTabSet', function () {
 
-  var templates = {
-    'default': {
-      scope: {},
-      element: '<div my-directive></div>'
-    }
-  };
+        beforeEach(function () {
+            var html = '<div><div quark-tab-set></div></div>';
+            elm = $compile(angular.element(html))($scope).appendTo('body');
+            $scope.$digest();
+        });
 
-  function compileDirective(template) {
-    template = template ? templates[template] : templates['default'];
-    angular.extend(scope, template.scope || templates['default'].scope);
-    var $element = $(template.element).appendTo($sandbox);
-    $element = $compile($element)(scope);
-    scope.$digest();
-    return $element;
-  }
+        afterEach(function () {
+            elm.remove();
+        });
 
-  it('should correctly display hello world', function () {
-    var elm = compileDirective();
-    expect(elm.text()).toBe('hello world');
-  });
+        it('should init sf-tab-set', function () {
+            expect(elm.find(".tab-hd li").length).toEqual(0);
+        });
+
+    });
+
+    describe('path location', function () {
+
+        describe('default setting', function () {
+
+            beforeEach(function () {
+
+                var html = '<div><div quark-tab-set>' +
+                    '<div quark-tab tab-href="a" template-url="">tab1</div>' +
+                    '<div quark-tab tab-href="b" template-url="">tab2</div>' +
+                    '<div quark-tab tab-href="c" template-url="">tab3</div>' +
+                    '</div></div>';
+
+                elm = $compile(angular.element(html))($scope).appendTo('body');
+                $scope.$digest();
+            });
+
+            afterEach(function () {
+                elm.remove();
+            });
+
+            it('should init sf-tab-set and sf-tab', function () {
+                expect(elm.find(".tab-hd li").length).toEqual(3);
+            });
+
+            it('should active tab when initialize', function () {
+                $timeout.flush();
+                expect(elm.find(".tab-hd li.active").index()).toEqual(0);
+            });
+
+            it('should set active when click tab', function () {
+                var firstTab = elm.find(".tab-hd li:eq(0)");
+                firstTab.find("a").click();
+                expect(firstTab.hasClass('active')).toBeTruthy();
+                expect($location.path()).toEqual('/'+firstTab.attr('tab-href'));
+            });
+
+        });
+
+
+        describe('test tab-init-active', function () {
+            beforeEach(function () {
+                var html = '<div><div quark-tab-set tab-init-active="1">' +
+                    '<div quark-tab tab-href="a" template-url="">tab1</div>' +
+                    '<div quark-tab tab-href="b" template-url="">tab2</div>' +
+                    '<div quark-tab tab-href="c" template-url="">tab3</div>' +
+                    '</div></div>';
+
+                elm = $compile(angular.element(html))($scope).appendTo('body');
+                $scope.$digest();
+            });
+
+            afterEach(function () {
+                elm.remove();
+            });
+
+            it('should active tab-init-active index tab when initialize', function () {
+                $timeout.flush();
+                expect(elm.find(".tab-hd li.active").index()).toEqual(1);
+            });
+        });
+
+        describe('test match location', function () {
+            beforeEach(function () {
+                $location.path('c');
+                var html = '<div><div quark-tab-set>' +
+                    '<div quark-tab tab-href="a" template-url="">tab1</div>' +
+                    '<div quark-tab tab-href="b" template-url="">tab2</div>' +
+                    '<div quark-tab tab-href="c" template-url="">tab3</div>' +
+                    '</div></div>';
+
+                elm = $compile(angular.element(html))($scope).appendTo('body');
+                $scope.$digest();
+            });
+            afterEach(function () {
+                elm.remove();
+            });
+            it('should active tab-init-active index tab when initialize', function () {
+                $timeout.flush();
+                expect(elm.find(".tab-hd li.active").index()).toEqual(2);
+            });
+        });
+
+    });
+
+    describe('hash location', function () {
+
+        describe('default setting', function () {
+
+            beforeEach(function () {
+                var html = '<div><div quark-tab-set tab-location-type="HASH">' +
+                    '<div quark-tab tab-href="a" template-url="">tab1</div>' +
+                    '<div quark-tab tab-href="b" template-url="">tab2</div>' +
+                    '<div quark-tab tab-href="c" template-url="">tab3</div>' +
+                    '</div></div>';
+
+                elm = $compile(angular.element(html))($scope).appendTo('body');
+                $scope.$digest();
+            });
+
+            afterEach(function () {
+                elm.remove();
+            });
+
+            it('should set active when click tab', function () {
+                var firstTab = elm.find(".tab-hd li:eq(2)");
+                firstTab.find("a").click();
+                expect(firstTab.hasClass('active')).toBeTruthy();
+                expect($location.hash()).toEqual(firstTab.attr('tab-href'));
+            });
+
+        });
+    });
+
 
 });
