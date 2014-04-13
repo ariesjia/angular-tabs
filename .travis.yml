@@ -5,5 +5,3 @@ node_js:
 before_script:
   - 'npm install -g bower grunt-cli karma'
   - 'npm install'
-
- script: grunt
