@@ -1,6 +1,6 @@
 /**
  * angular-tab
- * @version v0.0.11 - 2014-04-08
+ * @version v0.1.0 - 2014-04-14
  * @link https://github.com/ariesjia/angular-tab
  * @author Chenjia <ariesjia00@hotmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -36,24 +36,21 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
     replace: true,
     transclude: true,
     templateUrl: 'src/tab-set.html',
-    scope: {
-      tabSkipReload: '=',
-      tabInitActive: '=',
-      tabLocationType: '@'
-    },
     controller: [
       '$scope',
       'quarkTabConfig',
       '$timeout',
       '$filter',
-      function ($scope, quarkTabConfig, $timeout, $filter) {
+      '$attrs',
+      '$parse',
+      function ($scope, quarkTabConfig, $timeout, $filter, $attrs, $parse) {
         $scope.templateUrl = '';
         var self = this;
         var tabs = $scope.tabs = [];
-        self.tabSkipReload = $scope.tabSkipReload;
+        self.tabSkipReload = $parse($attrs.tabSkipReload)($scope);
         self.tabLocationType = getLocationType();
         function getLocationType() {
-          var tabLocationType = ($scope.tabLocationType || '').split(':');
+          var tabLocationType = ($attrs.tabLocationType || '').split(':');
           var type = tabLocationType[0].toLowerCase();
           if (type === quarkTabConfig.locationType[3]) {
             self.tabSearchName = tabLocationType.length > 1 ? tabLocationType[1] : quarkTabConfig.defaultSearchName;
@@ -77,13 +74,15 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
           tabs.push(tab);
         };
         $timeout(function () {
-          var seletedTab = $filter('filter')(tabs, { 'selected': true }), tabInitActive = $scope.tabInitActive || 0;
+          var seletedTab = $filter('filter')(tabs, { 'selected': true }), tabInitActive = $parse($attrs.tabInitActive)($scope) || 0;
           if (!seletedTab.length && angular.isNumber(tabInitActive) && tabInitActive < tabs.length) {
             tabs[tabInitActive].select();
           }
         });
       }
-    ]
+    ],
+    link: function (scope, element, attrs) {
+    }
   };
 }).directive('quarkTab', [
   'location',

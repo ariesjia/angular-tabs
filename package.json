@@ -1,9 +1,9 @@
 {
   "name": "angular-tab",
-  "version": "0.0.11",
+  "version": "0.1.0",
   "description": "angular-tab",
   "keywords": [
-    "angular"
+    "angular","tab","angular tab","angular-tab","quark-tab"
   ],
   "homepage": "https://github.com/ariesjia/angular-tab",
   "bugs": "https://github.com/ariesjia/angular-tab/issues",
@@ -21,6 +21,9 @@
       "type": "MIT"
     }
   ],
+  "scripts": {
+    "test": "grunt test"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.4",
