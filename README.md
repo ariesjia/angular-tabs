@@ -1,4 +1,7 @@
-# angular-tab
+# angular-tab [![Build Status](https://api.travis-ci.org/ariesjia/angular-tab.png)](https://travis-ci.org/ariesjia/angular-tab)
+
+***
+
 
 Here is the [Demo][demo]
 
