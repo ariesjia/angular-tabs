@@ -2,8 +2,8 @@
 
 angular.module('quark.tab.module', [])
     .constant("quarkTabConfig", {
-        locationType : ["url","path","hash","search"],
-        defaultSearchName : 'tab'
+        locationType: ["url", "path", "hash", "search"],
+        defaultSearchName: 'tab'
     })
     .factory('location', [
         '$location',
@@ -27,7 +27,7 @@ angular.module('quark.tab.module', [])
             replace: true,
             transclude: true,
             templateUrl: 'src/tab-set.html',
-            controller: ['$scope','quarkTabConfig','$timeout','$filter','$attrs','$parse', function ($scope,quarkTabConfig,$timeout,$filter,$attrs,$parse) {
+            controller: ['$scope', 'quarkTabConfig', '$timeout', '$filter', '$attrs', '$parse', function ($scope, quarkTabConfig, $timeout, $filter, $attrs, $parse) {
 
                 $scope.templateUrl = '';
                 var self = this;
@@ -41,8 +41,8 @@ angular.module('quark.tab.module', [])
                 function getLocationType() {
                     var tabLocationType = ($attrs.tabLocationType || '').split(':');
                     var type = (tabLocationType[0]).toLowerCase();
-                    if(type === quarkTabConfig.locationType[3]){
-                        self.tabSearchName = tabLocationType.length>1 ? tabLocationType[1] : quarkTabConfig.defaultSearchName;
+                    if (type === quarkTabConfig.locationType[3]) {
+                        self.tabSearchName = tabLocationType.length > 1 ? tabLocationType[1] : quarkTabConfig.defaultSearchName;
                     }
                     return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
                 }
@@ -66,17 +66,17 @@ angular.module('quark.tab.module', [])
                     tabs.push(tab);
                 };
 
-                $timeout(function(){
+                $timeout(function () {
                     var seletedTab = $filter('filter')(tabs, {'selected': true}),
                         tabInitActive = $parse($attrs.tabInitActive)($scope) || 0;
 
-                    if(!seletedTab.length && angular.isNumber(tabInitActive) && tabInitActive < tabs.length){
+                    if (!seletedTab.length && angular.isNumber(tabInitActive) && tabInitActive < tabs.length) {
                         tabs[tabInitActive].select();
                     }
                 });
 
             }],
-            link : function (scope, element, attrs){
+            link: function (scope, element, attrs) {
 
             }
         };
@@ -97,10 +97,10 @@ angular.module('quark.tab.module', [])
 
                 var locationMethod = tabSetController.tabLocationType,
                     locationFunc = function (value) {
-                        if(locationMethod == 'search'){
-                            if(value){
-                                return location[locationMethod](tabSetController.tabSearchName,value);
-                            }else{
+                        if (locationMethod === 'search') {
+                            if (value) {
+                                return location[locationMethod](tabSetController.tabSearchName, value);
+                            } else {
                                 return location[locationMethod]()[tabSetController.tabSearchName];
                             }
                         }
@@ -115,7 +115,7 @@ angular.module('quark.tab.module', [])
                     var hrefPath = path || scope.tabHref;
                     tabSetController.selectTab(scope);
 
-                    if(locationFunc() != hrefPath && !!scope.tabHref){
+                    if (locationFunc() != hrefPath && !!scope.tabHref) {
                         if (!path && tabSetController.tabSkipReload) {
                             location.skipReload();
                         }
@@ -124,7 +124,7 @@ angular.module('quark.tab.module', [])
 
                 };
 
-                if (regExp.test(curPath)) {
+                if ((scope.tabMatch || scope.tabHref) && regExp.test(curPath)) {
                     scope.select(curPath);
                 }
 

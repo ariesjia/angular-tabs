@@ -1,6 +1,6 @@
 /**
  * angular-tab
- * @version v0.1.0 - 2014-04-14
+ * @version v0.1.1 - 2014-04-14
  * @link https://github.com/ariesjia/angular-tab
  * @author Chenjia <ariesjia00@hotmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -100,7 +100,7 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
       templateUrl: 'src/tab.html',
       link: function (scope, element, attrs, tabSetController) {
         var locationMethod = tabSetController.tabLocationType, locationFunc = function (value) {
-            if (locationMethod == 'search') {
+            if (locationMethod === 'search') {
               if (value) {
                 return location[locationMethod](tabSetController.tabSearchName, value);
               } else {
@@ -120,7 +120,7 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
             locationFunc(hrefPath).replace();
           }
         };
-        if (regExp.test(curPath)) {
+        if ((scope.tabMatch || scope.tabHref) && regExp.test(curPath)) {
           scope.select(curPath);
         }
       }

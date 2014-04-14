@@ -39,7 +39,7 @@ var myApp = angular.module('myApp', ['quark.tab']);
 
 ### quark-tab-set
 
-- **tab-skip-reload** (default `true`)
+- **tab-skip-reload** (default `false`)
 
   The route change will not reload controller completely.
 
