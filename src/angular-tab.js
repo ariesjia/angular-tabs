@@ -29,23 +29,24 @@ angular.module('quark.tab.module', [])
             templateUrl: 'src/tab-set.html',
             controller: ['$scope', 'quarkTabConfig', '$timeout', '$filter', '$attrs', '$parse', function ($scope, quarkTabConfig, $timeout, $filter, $attrs, $parse) {
 
-                $scope.templateUrl = '';
-                var self = this;
+                var self = this,
+                    tabs = $scope.tabs = [],
+                    getLocationType = function () {
+                        var tabLocationType = ($attrs.tabLocationType || '').split(':'),
+                            type = (tabLocationType[0]).toLowerCase();
 
-                var tabs = $scope.tabs = [];
+                        if (type === quarkTabConfig.locationType[3]) {
+                            self.tabSearchName = tabLocationType.length > 1 ? tabLocationType[1] : quarkTabConfig.defaultSearchName;
+                        }
+                        return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
+                    };
+
+
+                $scope.templateUrl = '';
 
                 self.tabSkipReload = $parse($attrs.tabSkipReload)($scope);
 
                 self.tabLocationType = getLocationType();
-
-                function getLocationType() {
-                    var tabLocationType = ($attrs.tabLocationType || '').split(':');
-                    var type = (tabLocationType[0]).toLowerCase();
-                    if (type === quarkTabConfig.locationType[3]) {
-                        self.tabSearchName = tabLocationType.length > 1 ? tabLocationType[1] : quarkTabConfig.defaultSearchName;
-                    }
-                    return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
-                }
 
                 self.selectTab = function (tab) {
                     if (tab.selected) {
@@ -75,10 +76,7 @@ angular.module('quark.tab.module', [])
                     }
                 });
 
-            }],
-            link: function (scope, element, attrs) {
-
-            }
+            }]
         };
     })
     .directive('quarkTab', ['location', function (location) {
@@ -107,7 +105,7 @@ angular.module('quark.tab.module', [])
                         return location[locationMethod](value)
                     },
                     curPath = locationFunc(),
-                    regExp = new RegExp(scope.tabMatch || scope.tabHref);
+                    href = (scope.tabMatch || scope.tabHref);
 
                 tabSetController.addTab(scope);
 
@@ -124,7 +122,7 @@ angular.module('quark.tab.module', [])
 
                 };
 
-                if ((scope.tabMatch || scope.tabHref) && regExp.test(curPath)) {
+                if (href && (new RegExp(href)).test(curPath)) {
                     scope.select(curPath);
                 }
 
