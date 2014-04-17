@@ -1,6 +1,6 @@
 /**
  * angular-tab
- * @version v0.1.2 - 2014-04-15
+ * @version v0.1.3 - 2014-04-17
  * @link https://github.com/ariesjia/angular-tab
  * @author Chenjia <ariesjia00@hotmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -44,14 +44,14 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
       '$attrs',
       '$parse',
       function ($scope, quarkTabConfig, $timeout, $filter, $attrs, $parse) {
-        var self = this, tabs = $scope.tabs = [], getLocationType = function () {
+        var self = this, tabs = [], getLocationType = function () {
             var tabLocationType = ($attrs.tabLocationType || '').split(':'), type = tabLocationType[0].toLowerCase();
             if (type === quarkTabConfig.locationType[3]) {
               self.tabSearchName = tabLocationType.length > 1 ? tabLocationType[1] : quarkTabConfig.defaultSearchName;
             }
             return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
           };
-        $scope.templateUrl = '';
+        $scope.quarkTabSetTemplateUrl = '';
         self.tabSkipReload = $parse($attrs.tabSkipReload)($scope);
         self.tabLocationType = getLocationType();
         self.selectTab = function (tab) {
@@ -65,7 +65,7 @@ angular.module('quark.tab.module', []).constant('quarkTabConfig', {
           this.setTabUrl(tab.templateUrl);
         };
         self.setTabUrl = function (templateUrl) {
-          $scope.templateUrl = templateUrl;
+          $scope.quarkTabSetTemplateUrl = templateUrl;
         };
         self.addTab = function (tab) {
           tabs.push(tab);

@@ -1,6 +1,6 @@
 /**
  * angular-tab
- * @version v0.1.2 - 2014-04-15
+ * @version v0.1.3 - 2014-04-17
  * @link https://github.com/ariesjia/angular-tab
  * @author Chenjia <ariesjia00@hotmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -12,7 +12,7 @@ angular.module("src/tab-set.html", []).run(["$templateCache", function($template
     "<div class=\"md-quark-tab\">\n" +
     "    <ul class=\"tab-hd\" ng-transclude>\n" +
     "    </ul>\n" +
-    "    <div class=\"tab-bd\" nf-if=\"tabNeedUrl\" ng-include=\"templateUrl\">\n" +
+    "    <div class=\"tab-bd\" nf-if=\"tabNeedUrl\" ng-include=\"quarkTabSetTemplateUrl\">\n" +
     "    </div>\n" +
     "</div>");
 }]);
@@ -56,7 +56,7 @@ angular.module('quark.tab.module', [])
             controller: ['$scope', 'quarkTabConfig', '$timeout', '$filter', '$attrs', '$parse', function ($scope, quarkTabConfig, $timeout, $filter, $attrs, $parse) {
 
                 var self = this,
-                    tabs = $scope.tabs = [],
+                    tabs = [],
                     getLocationType = function () {
                         var tabLocationType = ($attrs.tabLocationType || '').split(':'),
                             type = (tabLocationType[0]).toLowerCase();
@@ -67,8 +67,7 @@ angular.module('quark.tab.module', [])
                         return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
                     };
 
-
-                $scope.templateUrl = '';
+                $scope.quarkTabSetTemplateUrl = '';
 
                 self.tabSkipReload = $parse($attrs.tabSkipReload)($scope);
 
@@ -86,7 +85,7 @@ angular.module('quark.tab.module', [])
                 };
 
                 self.setTabUrl = function (templateUrl) {
-                    $scope.templateUrl = templateUrl;
+                    $scope.quarkTabSetTemplateUrl = templateUrl;
                 };
 
                 self.addTab = function (tab) {

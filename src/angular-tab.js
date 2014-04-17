@@ -30,7 +30,7 @@ angular.module('quark.tab.module', [])
             controller: ['$scope', 'quarkTabConfig', '$timeout', '$filter', '$attrs', '$parse', function ($scope, quarkTabConfig, $timeout, $filter, $attrs, $parse) {
 
                 var self = this,
-                    tabs = $scope.tabs = [],
+                    tabs = [],
                     getLocationType = function () {
                         var tabLocationType = ($attrs.tabLocationType || '').split(':'),
                             type = (tabLocationType[0]).toLowerCase();
@@ -41,8 +41,7 @@ angular.module('quark.tab.module', [])
                         return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
                     };
 
-
-                $scope.templateUrl = '';
+                $scope.quarkTabSetTemplateUrl = '';
 
                 self.tabSkipReload = $parse($attrs.tabSkipReload)($scope);
 
@@ -60,7 +59,7 @@ angular.module('quark.tab.module', [])
                 };
 
                 self.setTabUrl = function (templateUrl) {
-                    $scope.templateUrl = templateUrl;
+                    $scope.quarkTabSetTemplateUrl = templateUrl;
                 };
 
                 self.addTab = function (tab) {

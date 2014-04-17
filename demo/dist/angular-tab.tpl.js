@@ -1,6 +1,6 @@
 /**
  * angular-tab
- * @version v0.1.0 - 2014-04-14
+ * @version v0.1.3 - 2014-04-17
  * @link https://github.com/ariesjia/angular-tab
  * @author Chenjia <ariesjia00@hotmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -12,7 +12,7 @@ angular.module("src/tab-set.html", []).run(["$templateCache", function($template
     "<div class=\"md-quark-tab\">\n" +
     "    <ul class=\"tab-hd\" ng-transclude>\n" +
     "    </ul>\n" +
-    "    <div class=\"tab-bd\" nf-if=\"tabNeedUrl\" ng-include=\"templateUrl\">\n" +
+    "    <div class=\"tab-bd\" nf-if=\"tabNeedUrl\" ng-include=\"quarkTabSetTemplateUrl\">\n" +
     "    </div>\n" +
     "</div>");
 }]);
@@ -28,8 +28,8 @@ angular.module("src/tab.html", []).run(["$templateCache", function($templateCach
 
 angular.module('quark.tab.module', [])
     .constant("quarkTabConfig", {
-        locationType : ["url","path","hash","search"],
-        defaultSearchName : 'tab'
+        locationType: ["url", "path", "hash", "search"],
+        defaultSearchName: 'tab'
     })
     .factory('location', [
         '$location',
@@ -53,25 +53,25 @@ angular.module('quark.tab.module', [])
             replace: true,
             transclude: true,
             templateUrl: 'src/tab-set.html',
-            controller: ['$scope','quarkTabConfig','$timeout','$filter','$attrs','$parse', function ($scope,quarkTabConfig,$timeout,$filter,$attrs,$parse) {
+            controller: ['$scope', 'quarkTabConfig', '$timeout', '$filter', '$attrs', '$parse', function ($scope, quarkTabConfig, $timeout, $filter, $attrs, $parse) {
 
-                $scope.templateUrl = '';
-                var self = this;
+                var self = this,
+                    tabs = [],
+                    getLocationType = function () {
+                        var tabLocationType = ($attrs.tabLocationType || '').split(':'),
+                            type = (tabLocationType[0]).toLowerCase();
 
-                var tabs = $scope.tabs = [];
+                        if (type === quarkTabConfig.locationType[3]) {
+                            self.tabSearchName = tabLocationType.length > 1 ? tabLocationType[1] : quarkTabConfig.defaultSearchName;
+                        }
+                        return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
+                    };
+
+                $scope.quarkTabSetTemplateUrl = '';
 
                 self.tabSkipReload = $parse($attrs.tabSkipReload)($scope);
 
                 self.tabLocationType = getLocationType();
-
-                function getLocationType() {
-                    var tabLocationType = ($attrs.tabLocationType || '').split(':');
-                    var type = (tabLocationType[0]).toLowerCase();
-                    if(type === quarkTabConfig.locationType[3]){
-                        self.tabSearchName = tabLocationType.length>1 ? tabLocationType[1] : quarkTabConfig.defaultSearchName;
-                    }
-                    return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
-                }
 
                 self.selectTab = function (tab) {
                     if (tab.selected) {
@@ -85,26 +85,23 @@ angular.module('quark.tab.module', [])
                 };
 
                 self.setTabUrl = function (templateUrl) {
-                    $scope.templateUrl = templateUrl;
+                    $scope.quarkTabSetTemplateUrl = templateUrl;
                 };
 
                 self.addTab = function (tab) {
                     tabs.push(tab);
                 };
 
-                $timeout(function(){
+                $timeout(function () {
                     var seletedTab = $filter('filter')(tabs, {'selected': true}),
                         tabInitActive = $parse($attrs.tabInitActive)($scope) || 0;
 
-                    if(!seletedTab.length && angular.isNumber(tabInitActive) && tabInitActive < tabs.length){
+                    if (!seletedTab.length && angular.isNumber(tabInitActive) && tabInitActive < tabs.length) {
                         tabs[tabInitActive].select();
                     }
                 });
 
-            }],
-            link : function (scope, element, attrs){
-
-            }
+            }]
         };
     })
     .directive('quarkTab', ['location', function (location) {
@@ -123,17 +120,17 @@ angular.module('quark.tab.module', [])
 
                 var locationMethod = tabSetController.tabLocationType,
                     locationFunc = function (value) {
-                        if(locationMethod == 'search'){
-                            if(value){
-                                return location[locationMethod](tabSetController.tabSearchName,value);
-                            }else{
+                        if (locationMethod === 'search') {
+                            if (value) {
+                                return location[locationMethod](tabSetController.tabSearchName, value);
+                            } else {
                                 return location[locationMethod]()[tabSetController.tabSearchName];
                             }
                         }
                         return location[locationMethod](value)
                     },
                     curPath = locationFunc(),
-                    regExp = new RegExp(scope.tabMatch || scope.tabHref);
+                    href = (scope.tabMatch || scope.tabHref);
 
                 tabSetController.addTab(scope);
 
@@ -141,7 +138,7 @@ angular.module('quark.tab.module', [])
                     var hrefPath = path || scope.tabHref;
                     tabSetController.selectTab(scope);
 
-                    if(locationFunc() != hrefPath && !!scope.tabHref){
+                    if (locationFunc() != hrefPath && !!scope.tabHref) {
                         if (!path && tabSetController.tabSkipReload) {
                             location.skipReload();
                         }
@@ -150,7 +147,7 @@ angular.module('quark.tab.module', [])
 
                 };
 
-                if (regExp.test(curPath)) {
+                if (href && (new RegExp(href)).test(curPath)) {
                     scope.select(curPath);
                 }
 
