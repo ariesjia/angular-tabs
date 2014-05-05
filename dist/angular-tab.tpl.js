@@ -1,6 +1,6 @@
 /**
  * angular-tab
- * @version v0.1.3 - 2014-04-17
+ * @version v0.1.5 - 2014-05-05
  * @link https://github.com/ariesjia/angular-tab
  * @author Chenjia <ariesjia00@hotmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -67,6 +67,17 @@ angular.module('quark.tab.module', [])
                         return quarkTabConfig.locationType.indexOf(type) >= 0 ? type : 'path';
                     };
 
+                var parseFuction = function (funKey) {
+                        if ($attrs[funKey]) {
+                            var func = $parse($attrs[funKey]);
+                            return function (args) {
+                                return func($scope, args);
+                            };
+                        }
+                        return null;
+                    },
+                    tabChange = parseFuction("tabChange");
+
                 $scope.quarkTabSetTemplateUrl = '';
 
                 self.tabSkipReload = $parse($attrs.tabSkipReload)($scope);
@@ -81,6 +92,13 @@ angular.module('quark.tab.module', [])
                         tab.selected = false;
                     });
                     tab.selected = true;
+
+                    if(tabChange){
+                        tabChange({
+                            "tab" : tab
+                        });
+                    }
+
                     this.setTabUrl(tab.templateUrl);
                 };
 
